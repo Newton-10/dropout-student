@@ -5,6 +5,16 @@ from supabase import create_client, Client
 from sklearn.ensemble import RandomForestClassifier
 import numpy as np
 from sklearn.metrics import accuracy_score
+from fastapi.middleware.cors import CORSMiddleware
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # or restrict to your frontend URL
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 
 # Load trained model
 model = joblib.load("dropout_model.pkl")
@@ -144,3 +154,4 @@ def retrain_model():
         "samples": len(X),
         "accuracy": round(acc, 2)
     }
+
