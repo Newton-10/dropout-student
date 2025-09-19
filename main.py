@@ -33,7 +33,15 @@ class StudentData(BaseModel):
 
 # Create FastAPI app
 app = FastAPI(title="Student Dropout Prediction API")
+from fastapi.middleware.cors import CORSMiddleware
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # or restrict to your frontend URL
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 @app.post("/predict-risk")
 def predict_risk(student: StudentData):
     features = [[
@@ -154,4 +162,5 @@ def retrain_model():
         "samples": len(X),
         "accuracy": round(acc, 2)
     }
+
 
